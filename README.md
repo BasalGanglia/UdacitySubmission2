@@ -86,3 +86,36 @@ The full process includes the following 7 stages (see also the architectural dia
 *TODO* Provide a link to a screen recording of the project in action. Remember that the screencast should demonstrate:
 The screencast can be found here:
 https://youtu.be/XLlHat3JGvA
+
+##  Items added per request of the reviewer
+### Ideas how to improve the model
+One idea to improve the AutoML model is to do manual feature selection. To try this out,
+I used The Boruta library, as suggested by the reviewer. To be able to use the Boruta,
+I had to do some basic data pre-processing step manually, such as converting the categorical
+(string) features into numeric labels. You can see the steps in the screenshot below (some of the
+Boruta code was copied from the link the reviewer provided: (https://towardsdatascience.com/simple-example-using-boruta-feature-selection-in-python-8b96925d5d7a )
+
+![Manual feature selection](feature_selection.jpg)
+
+After the Boruta finished, it gave me a list of features to remove from the model:
+
+![Features to be removed](features_to_use.jpg)
+
+I then went and created a new version of the dataset in the AzureML studio, removing these features from 
+the schema, and reran the pipeline with the new dataset. The new model performed a lot worse than the 
+original one:
+
+![performance of the smaller model](output_of_new_model.jpg)
+
+Thus it might be necessary to modify the manual feature selection process. Now I did not have 
+much time so I just label encoded everything and then standardized the features before 
+feeding them into the feature selection algorithm.
+
+### requested images:
+Here is the pipeline endpoint
+
+![The pipeline endpoint](new_pipeline_endpoint.jpg)
+
+and here is the image for the widget..
+
+![the widget](widget.jpg)
